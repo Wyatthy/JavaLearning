@@ -1,3 +1,15 @@
+
+
+# 一些小函数
+
+## 判断字符串  
+
+```c++
+#include<cctype>
+int isalpha ( int c );			//判断是否为字母
+int isdigit ( int c);			//判断是否为0-9数字
+```
+
 ## atoi() 和 stoi()
 
 相同点：
@@ -72,9 +84,11 @@ pi is 3.141593
 
 
 
-# 格式化输出
+# 输入输出
 
-## printf格式输出数字，位数不够前面补0
+## 格式化输出
+
+### printf格式输出数字，位数不够前面补0
 
 ```c++
 int a = 4;
@@ -82,11 +96,52 @@ printf("%03d",a);
 /*输出：
 004
 */
-
 //也可以用 * 代替位数，在后面的参数列表中用变量控制输出位数；
 int a = 4;
 int n = 3;
 printf("%0*d",n,a);
 输出：004
 ```
+
+printf格式输出数字，保留小数点
+
+```c++
+float p=1f;
+printf("%.2f",p);
+/*输出：
+1.00
+*/
+```
+
+
+
+# 体排序
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+typedef struct{
+	string name,id;
+	int score;
+}stu; 
+
+bool cmp(stu &a,stu &b)            //当return的是ture时，a先输出，所以是升序
+{
+     return a.score < b.score;
+}
+int main(){
+	stu li[n];
+    //li的初始化
+	sort(li,li+n,cmp);
+	return 0;
+}
+```
+
+## 容器
+
+### Unordered Set
+
+Unordered sets are containers that store unique elements in no particular order, and which allow for fast retrieval of individual elements based on their value.
+
+
 
