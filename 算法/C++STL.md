@@ -2,6 +2,12 @@
 
 # 一些小函数
 
+vector容器的大小：`a.size()`
+
+char数组的实际大小：`strlen(a)`
+
+string大小：`s.length();`
+
 ## 判断字符串  
 
 ```c++
