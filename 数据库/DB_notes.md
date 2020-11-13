@@ -40,6 +40,11 @@ ALTER  TABLE 表名 MODIFY [COLUMN] 字段名 新数据类型 新类型长度  �
  mysql> alter table MyClass add passtest int(4) default '0';
 ```
 
+建表时最后一个属性不加*，*
+![image-20201025232433858](DB_notes.assets/image-20201025232433858.png)
+
+![image-20201025232554258](DB_notes.assets/image-20201025232554258.png)
+
 ## 主键添加/删除
 
 建表时添加：

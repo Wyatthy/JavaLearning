@@ -2,11 +2,18 @@
 
 # 一些小函数
 
-vector容器的大小：`a.size()`
+> vector容器的大小：`a.size()`
+>
+> char数组的实际大小：`strlen(a)`
+>
+> string大小：`s.length();`
+>
 
-char数组的实际大小：`strlen(a)`
+取整函数	ceil()	floor()
 
-string大小：`s.length();`
+
+
+
 
 ## 判断字符串  
 
@@ -92,8 +99,6 @@ pi is 3.141593
 
 头文件： #include  <algorithm>
 
- 
-
 二分查找的函数有 3 个： [
 ](https://www.cnblogs.com/cunyusup/p/8438749.html)
 
@@ -156,11 +161,136 @@ void main()
 }
 ```
 
+## next_permutation
+
+next_permutation(iterator.begin(),iterator.end(),cmp)
+
+参见https://blog.csdn.net/HowardEmily/article/details/68064377
+
+全排列参考了两位的博客 感谢!
+
+http://blog.sina.com.cn/s/blog_9f7ea4390101101u.html
+
+http://blog.csdn.net/ac_gibson/article/details/45308645
+
+  组合数学中经常用到排列，这里介绍一个计算序列全排列的函数：next_permutation（start,end），和prev_permutation（start,end）。这两个函数作用是一样的，区别就在于前者求的是当前排列的下一个排列，后一个求的是当前排列的上一个排列。至于这里的“前一个”和“后一个”，我们可以把它理解为序列的字典序的前后，严格来讲，就是对于当前序列pn，他的下一个序列pn+1满足：不存在另外的序列pm，使pn<pm<pn+1.
+
+ 
+
+对于next_permutation函数，其函数原型为：
+
+   \#include <algorithm>
+
+   bool next_permutation(iterator start,iterator end)
+
+当当前序列不存在下一个排列时，函数返回false，否则返回true
+
+我们来看下面这个例子：
+
+```c++
+#include <iostream> 
+#include <algorithm> 
+using namespace std; 
+int main() 
+{ 
+  int num[3]={1,2,3}; 
+  do 
+  {cout<<num[0]<<" "<<num[1]<<" "<<num[2]<<endl; 
+  }while(next_permutation(num,num+3)); 
+  return 0; 
+}
+```
+
+输出结果为：
+
+![img](C++.assets/20150427130510043)
+
+当我们把while(next_permutation(num,num+3))中的3改为2时，输出就变为了：
+
+![img](C++.assets/20150427130713826)
+
+由此可以看出，next_permutation(num,num+n)函数是对数组num中的前n个元素进行全排列，同时并改变num数组的值。
+
+另外，需要强调的是，next_permutation（）在使用前需要对欲排列数组按升序排序，否则只能找出该序列之后的全排列数。比如，如果数组num初始化为2,3,1，那么输出就变为了：
+
+![img](C++.assets/20150427131704330)
+
+ 
+
+此外，next_permutation（node,node+n,cmp）可以对结构体num按照自定义的排序方式cmp进行排序。
+也可以对字符...
+next_permutation 自定义比较函数 POJ 1256
+
+题目中要求的字典序是`'A'<'a'<'B'<'b'<...<'Z'<'z'.`
+
+```cpp
+#include<iostream> //poj 1256 Anagram
+#include<string>
+#include<algorithm>
+using namespace std;
+int cmp(char a,char b) 
+{
+ if(tolower(a)!=tolower(b))//tolower 是将大写字母转化为小写字母.
+ return tolower(a)<tolower(b);
+ else
+ return a<b;
+}
+int main()
+{
+ char ch[20];
+ int n;
+ cin>>n;
+ while(n--)
+{
+scanf("%s",ch);
+sort(ch,ch+strlen(ch),cmp);
+ do
+{
+printf("%s\n",ch);
+}while(next_permutation(ch,ch+strlen(ch),cmp));
+}
+ return 0;
+}
+```
+
+ 
+
 # 输入输出
+
+连续使用scanf时遇到的问题https://www.cnblogs.com/qxj511/p/5218279.html
+
+## C库标准输入输出：
+
+### **getchar、putchar**
+
+`int getchar(void)`		
+单次从缓冲区读入一个（无符号）字符，无参，返回int
+函数的返回值为用户输入的第一个字符的ASCII码，若出错返回-1，且将用户输入的字符回显到屏幕。如果用户在按回车键之前输入了不只一个字符，**其他字符会保留在键盘缓冲区中**，等待后续getchar()调用读取。也就是说，后续的getchat()调用不会等待用户按键，而是直接读取缓冲区中的字符，直到缓冲区的字符读取完毕后，才等待用户按键。
+
+`int putchar(int char)`	
+输出一个字符到控制台
+
+> putchar()非真正函数，而是putc(ch, stdout)宏定义。
+
+```c++
+char c;
+for(int i=0;i<5;i++){
+    c=getchar()+4;
+    putchar(c);
+}
+/*
+输入China
+输出Glmre
+*/
+```
+
+
+
+
 
 ## 格式化输出
 
-### printf格式输出数字，位数不够前面补0
+**printf格式输出数字，位数不够前面补0**
 
 ```c++
 int a = 4;
@@ -179,10 +309,14 @@ printf格式输出数字，保留小数点
 
 ```c++
 float p=1f;
-printf("%.2f",p);
+printf("%5.2f",p);
 /*输出：
-1.00
-*/
+  1.00
+*///两空格，共5位宽度
+printf("%-5.2f",p);
+/*输出：
+1.00  
+*///两空格，共5位宽度，左对齐
 ```
 
 
@@ -209,11 +343,152 @@ int main(){
 }
 ```
 
-## 容器
+# 容器
 
-### Unordered Set
+![image-20201107105750273](C++.assets/image-20201107105750273.png)
+
+![image-20201107105520019](C++.assets/image-20201107105520019.png)
+
+
+
+## SET
 
 Unordered sets are containers that store unique elements in no particular order, and which allow for fast retrieval of individual elements based on their value.
+
+set关联式容器。set作为一个容器也是用来存储同一数据类型的数据类型，并且能从一个数据集合中取出数据，在set中每个元素的值都唯一，而且系统能根据元素的值自动进行排序。https://blog.csdn.net/yas12345678/article/details/52601454
+
+**判断元素是否在集合set中**
+
+`s.count(q)`			在了返回1 反之返回0
+`s.find(q)`				在了返回所在迭代器，反之返回s.end()
+
+**erase(iterator) ,删除定位器iterator指向的值**
+
+**erase(first,second),删除定位器first和second之间的值**
+
+**erase(key_value),删除键值key_value的值**
+
+
+
+## Map
+
+> map就是从键（key）到值（value）的映射。因为重载了 [ ] 运算符，map更像是数组的“高级版”。例如可以用一个map< string,int>month_name来表示“月份名字到月份编号”的映射，然后用 month_name[“July”]=7 这样的方式来赋值。
+
+所有元素会根据key值排序（默认升序，如果键值为字符串就是字典序），map中的所有元素都是pair，同时拥有实值和键值，pair的**first为键值**，**second为实值**，底层将它的first作为红黑树的排序key。
+map不允许有两个相同键值的元素。map的迭代器不能修改键值，但可以修改实值。主要用于处理带有键值的记录性元素数据的快速插入、删除和检索。
+
+- 创建map对象
+
+```
+    map<string,double> m;
+```
+
+- 插入和访问
+  （访问时如果map中不存在该键值，实值为空，对于数字则为0，字符串则为空串。）
+
+```
+    m["Jack"]=98.5;
+    cout<<m["Jack"]<<endl;
+    m.insert(make_pair("test3",3 ));
+```
+
+- 遍历
+
+```
+    map<string,double>::iterator it;
+    for(it=m.begin();it!=m.end();it++)
+        cout<<(*it).first<<":"<<(*it).second<<endl;123
+```
+
+- 删除
+
+```
+    //通过键值删除
+    m.erase("Jack");
+
+    //清空
+    m.clear();12345
+```
+
+还有一种方法是遍历删除，既可以通过键值，也可以通过实值，不过由于迭代器的属性，这种方法不注意的话很容易出错。这里贴两个大神的链接：
+[c++ 关于map的遍历 删除](http://blog.csdn.net/windren06/article/details/8141921)
+[c++如何遍历删除map/vector里面的元素](http://www.cnblogs.com/dabaopku/p/3912662.html)
+
+- 查找
+  使用键值进行查找操作。大多数情况**直接用键值访问**就行了，很少用到下面的m.find()
+
+> Searches the container for an element with a *key* equivalent to *k* and returns an iterator to if found,otherwise it returns an iterator to map::end
+
+1.用find函数来定位键值出现位置，它返回的一个迭代器，当键值出现时，它返回所在位置的迭代器，如果map中没有要查找的键值，它返回的迭代器等于end函数返回的迭代器
+
+```
+    map<string,double>::iterator it;
+    it=m.find("Jack");
+    cout<<(*it).first<<":"<<(*it).second<<endl;
+
+    //等价于
+
+    cout<<"Jack"<<":"<<m["Jack"]<<endl;
+12345678
+```
+
+2.用count函数来判定键值是否出现，count函数的返回值只有两个，键值出现返回1，否则返回0
+
+```
+    if(m.count("Jack"))
+        cout<<"FOUND"<<endl;
+    else
+        cout<<"NOT FOUND"<<endl;
+
+    //等价于
+
+    if(m["Jack"])
+        cout<<"FOUND"<<endl;
+    else
+        cout<<"NOT FOUND"<<endl;
+```
+
+插入<key, value>键值对时，默认按照key的字典序**升序**less存储**。这也是作为key的类型必须能够进行<运算比较的原因。现在我们用string类型作为key，因此，我们的存储就是按学生姓名的字典排序储存的。
+
+```cpp
+template < class Key, class T, class Compare = less<Key>,
+           class Allocator = allocator<pair<const Key,T> > > class map;
+```
+
+`class Compare = less<Key>`
+
+```c++
+template <class T> struct less : binary_function <T,T,bool> {
+  bool operator() (const T& x, const T& y) const
+    {return x<y;}
+};
+```
+
+它是一个带模板的struct，里面仅仅对()运算符进行了重载，实现很简单，但用起来很方便，这就是函数对象的优点所在。stl中还为四则运算等常见运算定义了这样的函数对象，与less相对的还有greater：
+
+```cpp
+template <class T> struct greater : binary_function <T,T,bool> {
+  bool operator() (const T& x, const T& y) const
+    {return x>y;}
+};
+```
+
+map这里指定less作为其默认比较函数(对象)，所以我们通常如果不自己指定Compare，map中键值对就会按照Key的less顺序进行组织存储，因此我们就看到了上面代码输出结果是按照学生姓名的字典顺序输出的，即string的less序列。
+
+我们可以在定义map的时候，指定它的第三个参数Compare，比如我们把默认的less指定为greater，就按照key的字典序降序排列了
+
+我们自己写一个函数对象，实现想要的逻辑，定义map的时候把Compare指定为我们自己编写的这个就ok啦。
+
+```cpp
+struct CmpByKeyLength {
+  bool operator()(const string& k1, const string& k2) {
+    return k1.length() < k2.length();
+  }
+};
+map<string, int, CmpByKeyLength> name_score_map;
+```
+
+https://blog.csdn.net/iicy266/article/details/11906189
 
 # Dijkstra
 
@@ -294,34 +569,161 @@ void Dijkstra(int s) {
 }
 ```
 
-## DFS（深度优先搜索）：不撞南墙不回头
+# 搜索算法
 
-## BFS（深度优先搜索）：发散性寻找（分身寻找）
+BFS（广度优先搜索）：发散性寻找（分身寻找）
 
-#### 以经典例题：迷宫问题为例
+DFS（深度优先搜索）：不撞南墙不回头
+
+**以经典例题：迷宫问题为例**
 
 **画个迷宫1表示墙，0表示路。**
-![在这里插入图片描述](C++STL.assets/d7aac5d5bc37470eb77a3c1d91da6ba6-1.jpg)
+![在这里插入图片描述](C++.assets/d7aac5d5bc37470eb77a3c1d91da6ba6-1.jpg)
 
-### DFS思想
+**DFS思想**
 
 从起点开始，沿着一条路一直走到底，若是发现不能到达目标解，那就返回到上一个节点，而后从另外一条路开始走到底（即尽可能往深处走）svg
 
-### BFS思想
+**BFS思想**
 
-从起点开始，逐层寻找（发散性寻找）（即往四周走）xml
+从起点开始，逐层寻找（发散性寻找）（即往四周走）
 
-##### DFS优势：消耗内存少 （容易时间超限）
+**DFS优势：消耗内存少 （容易时间超限）**
 
-##### BFS优势：消耗时间少 （容易内存超限）
+**BFS优势：消耗时间少 （容易内存超限）**
 
-##### DFS适合题目类型：给定初始状态跟目标状态，要求判断从初始状态到目标状态是否有解。
+**DFS适合题目类型：给定初始状态跟目标状态，要求判断从初始状态到目标状态是否有解。**
 
-##### BFS适合题目类型：给定初始状态跟目标状态，要求求出从初始状态到目标状态的最优解。
+**BFS适合题目类型：给定初始状态跟目标状态，要求求出从初始状态到目标状态的最优解。**
 
 例如：上述的迷宫问题。
 如果问：从迷宫左上角到迷宫右下角是否存在路径长度为9的路径，则用DFS。
 如果问：从迷宫左上角到迷宫右下角的最短路径是多少，则用BFS。
+
+## DFS
+
+柳婼笔记https://www.liuchuo.net/archives/tag/dfs
+
+DFS--基本入门模板 和 例题 （绝对入门） (最全)
+
+https://blog.csdn.net/qq_40763929/article/details/81629800?biz_id=102&utm_term=DFS&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-81629800&spm=1018.2118.3001.4187
+
+![img](C++.assets/20161116172334228)
+
+## BFS
+
+#### 
+
+![img](C++.assets/20161116172348041)
+
+# 欧拉回路的判断
+
+## 基础概念
+
+首先来看一下离散数学中的一些基础概念：
+**通路**：在无向图中由点边交替组成的序列就是通路（如果这个图是简单的，那么也可以使用点的序列来表示），如果首尾的点相同，则称为一条回路
+**无向图的连通性**：无向图中任意一对点之间均有通路
+**欧拉通路**：从某个顶点出发，将所有的边遍历一遍并且仅经过一遍的通路序列称为欧拉通路，连通的多重图有欧拉回路而无欧拉回路当且仅当它恰有两个奇数度顶点
+这里说明了欧拉通路的条件：
+
+- 图是连通的，没有孤立节点
+- 对于无向图来说，奇数度的顶点为2个，这两个顶点分别是起点以及终点（0个的话就是回路了）
+
+**欧拉回路**：如果欧拉通路的起点与终点一样，则成为欧拉回路， 连通的多重图具有欧拉回路当且仅当它的每个顶点都有偶数度
+则欧拉回路的条件：
+
+- 图是连通的，没有孤立节点
+- 无向图的每个节点的度数都是偶数度，有向图每个节点的入度等于出度
+
+## 判断图是否存在欧拉回路
+
+根据判断的条件，首先是判断图的连通性，然后判断图的每个节点的度数是否是偶数就可以了：
+
+例如，这个题目：
+
+链接：https://www.nowcoder.com/questionTerminal/0ba5d8f525494a8787aaa9d53b5f9b9e
+来源：牛客网
+
+输入描述:
+
+测试输入包含若干测试用例。每个测试用例的第1行给出两个正整数，分别是节点数N ( 1 < N < 1000 )和边数M；随后的M行对应M条边，每行给出一对正整数，分别是该条边直接连通的两个节点的编号（节点从1到N编号）。当N为0时输入结束。
+
+输出描述:
+
+每个测试用例的输出占一行，若欧拉回路存在则输出1，否则输出0。
+示例1
+输入
+
+3 3
+1 2
+1 3
+2 3
+3 2
+1 2
+2 3
+0
+输出
+
+1
+0
+
+**代码**
+
+```c++
+#include<stdio.h>
+#include<stdlib.h>
+#include<memory.h>
+#include<algorithm>
+#include<iostream>
+using namespace std;
+#define N 1005
+int n,m;
+int a,b;
+int degree[N];
+int tree[N];
+
+int findroot(int x){               //并查集的方式判断图连通性
+    if(tree[x]==-1)
+        return x;
+    else{
+        int temp = findroot(tree[x]);
+        tree[x] = temp;
+        return temp;
+    }
+}
+int main(){
+    while(cin>>n && n){
+        cin>>m;
+        memset(tree, -1, sizeof(tree));
+        memset(degree, 0, sizeof(degree));
+        for(int i=0; i<m; i++){
+            cin>>a>>b;
+            int tempa = findroot(a);
+            int tempb = findroot(b);
+            if(tempa != tempb)
+                tree[tempa] = tempb;
+            degree[a]++;                //无向图记录度数
+            degree[b]++;
+        }
+        int flag = 0;
+        int ans = 0;
+        for(int i=1; i<= n; i++){     //判断连通性
+            if(tree[i]==-1)
+                ans++;
+        }
+        for(int i=1; i<=n; i++){    //判断度数
+            if(degree[i]%2){
+                flag = 1;
+                break;
+            }
+        }
+        if(ans > 1 || flag)
+            cout<<"0"<<endl;
+        else
+            cout<<"1"<<endl;
+    }
+}
+```
 
 # 未解决的问题
 
@@ -359,3 +761,6 @@ int main(int argc, char* argv[])
 }
 ```
 
+# 01背包
+
+https://www.jianshu.com/p/a66d5ce49df5   小朋友视角
