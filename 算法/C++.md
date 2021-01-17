@@ -43,17 +43,17 @@ cout<<atoi(s3.c_str());		//正确
 
 int main ()
 {
-  std::string str_dec = "2001, A Space Odyssey";
-  std::string str_hex = "40c3";
-  std::string str_bin = "-10010110001";
-  std::string str_auto = "0x7f";
+  string str_dec = "2001, A Space Odyssey";
+  string str_hex = "40c3";
+  string str_bin = "-10010110001";
+  string str_auto = "0x7f";
 
   std::string::size_type sz;   // alias of size_t
 
-  int i_dec = std::stoi (str_dec,&sz);
-  int i_hex = std::stoi (str_hex,nullptr,16);
-  int i_bin = std::stoi (str_bin,nullptr,2);
-  int i_auto = std::stoi (str_auto,nullptr,0);
+  int i_dec = stoi (str_dec,&sz);
+  int i_hex = stoi (str_hex,nullptr,16);
+  int i_bin = stoi (str_bin,nullptr,2);
+  int i_auto = stoi (str_auto,nullptr,0);
 
   std::cout << str_dec << ": " << i_dec << " and [" << str_dec.substr(sz) << "]\n";
   std::cout << str_hex << ": " << i_hex << '\n';
@@ -319,6 +319,18 @@ printf("%-5.2f",p);
 *///两空格，共5位宽度，左对齐
 ```
 
+#### cpp保留任意小数点位数
+
+```cpp
+#include<iostream>
+using namespace std;
+int main(){
+    double PI=3.1415926;
+    cout<<setprecision(3)<<PI<<endl;
+    return 0;//3.14三位有效数
+}
+```
+
 
 
 # 体排序
@@ -349,6 +361,83 @@ int main(){
 
 ![image-20201107105520019](C++.assets/image-20201107105520019.png)
 
+`li.at(0)===li.begin()===li.front`
+
+```
+   v2.erase(v2.begin()); //删除开头的元素
+ 
+   v2.erase(v2.begin(),v2.end); //删除[begin,end]区间的元素
+ 
+   v2.pop_back();   //删除最后一个元素
+   函数                                   说明
+ 
+c.assign(beg,end)            //将[beg; end)区间中的数据赋值给c。
+ 
+c.assign(n,elem)             //将n个elem的拷贝赋值给c。
+    
+c.at(idx)                    //传回索引idx所指的数据，如果idx越界，抛出out_of_range。
+    
+c.back()                     //传回最后一个数据，不检查这个数据是否存在。
+    
+c.begin()                    //传回迭代器中的第一个数据地址。
+    
+c.capacity()                 //返回容器中数据个数。
+    
+c.clear()                    //移除容器中所有数据。
+    
+c.empty()                    //判断容器是否为空。
+ 
+c.end()                      //指向迭代器中的最后一个数据地址。
+ 
+c.erase(pos)                 //删除pos位置的数据，传回下一个数据的位置。
+ 
+c.erase(beg,end)             // 删除[beg,end)区间的数据，传回下一个数据的位置。
+ 
+c.front()                    //传回第一个数据。
+    
+get_allocator                //使用构造函数返回一个拷贝。
+    
+c.insert(pos,elem)           //在pos位置插入一个elem拷贝，传回新数据位置。
+ 
+c.insert(pos,n,elem)         //在pos位置插入n个elem数据。无返回值。
+ 
+c.insert(pos,beg,end)        //在pos位置插入在[beg,end)区间的数据。无返回值。
+    
+c.max_size()                 //返回容器中最大数据的数量。
+    
+c.pop_back()                 //删除最后一个数据。
+    
+c.push_back(elem)            //在尾部加入一个数据。
+ 
+c.rbegin()                   //传回一个逆向队列的第一个数据。
+    
+c.rend()                     //传回一个逆向队列的最后一个数据的下一个位置。
+ 
+c.resize(num)                //重新指定队列的长度。
+ 
+c.reserve()                  //保留适当的容量。
+ 
+c.size()                     //返回容器中实际数据的个数。
+ 
+c1.swap(c2)                  //将c1和c2元素互换。
+ 
+swap(c1,c2)                  //同上操作。
+    
+vector<Elem> c               //创建一个空的vector。
+ 
+vector<Elem> c1(c2)          //复制一个vector。
+ 
+vector <Elem> c(n)           //创建一个vector，含有n个数据，数据均已缺省构造产生。
+ 
+vector <Elem> c(n, elem)     //创建一个含有n个elem拷贝的vector。
+ 
+vector <Elem> c(beg,end)     //创建一个以[beg;end)区间的vector。
+ 
+c.~ vector <Elem>()          //销毁所有数据，释放内存。
+    
+operator[]                   //返回容器中指定位置的一个引用。
+```
+
 
 
 ## SET
@@ -367,6 +456,22 @@ set关联式容器。set作为一个容器也是用来存储同一数据类型�
 **erase(first,second),删除定位器first和second之间的值**
 
 **erase(key_value),删除键值key_value的值**
+
+set进去的元素也是默认**升序**的	若要降序 自己写
+
+```c++
+template<class _Ty = void>
+struct more
+	: public binary_function<_Ty, _Ty, bool>
+{	// functor for operator<
+	bool operator()(const _Ty& _Left, const _Ty& _Right) const
+	{	// apply operator< to operands
+		return (_Left > _Right);
+	}
+};
+
+set<int,more<int>> s;
+```
 
 
 
@@ -763,4 +868,4 @@ int main(int argc, char* argv[])
 
 # 01背包
 
-https://www.jianshu.com/p/a66d5ce49df5   小朋友视角
+https://www.jianshu.com/p/a66d5ce49df5   小朋友视角	

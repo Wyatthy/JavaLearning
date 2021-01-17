@@ -224,3 +224,12 @@ System.out.println(helloWorld2);
 
 即Bean依赖注入的方式
 
+
+
+
+
+# Maven配置
+
+https://www.cnblogs.com/lizm166/p/10748867.html	Apache Maven 3.6.1配置安装
+
+idea配置maven  https://blog.csdn.net/u012538609/article/details/104901047
