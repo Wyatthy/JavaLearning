@@ -23,6 +23,24 @@ int isalpha ( int c );			//判断是否为字母
 int isdigit ( int c);			//判断是否为0-9数字
 ```
 
+## 字符串切割
+
+### 通过string成员函数实现
+
+在C++ string类中，提供了两个成员函数可以用来实现字符串分割，一个是find函数，另一个是substr函数，下面看一下这两个函数的声明。
+ **find**函数:
+ 原型： `size_t find (const string& str, size_t pos = 0) const;`
+ 功能：查找子字符串第一次出现的位置。
+ 参数说明：str为子字符串，pos为初始查找位置。
+ 返回值：找到的话返回第一次出现的位置，否则返回string::npos。
+ **substr**函数:
+ 原型： `string substr (size_t pos = 0, size_t len = npos) const;`
+ 功能：在原字符串中截取子字符串。
+ 参数说明：pos为起始位置，len为要截取子字符串的长度。
+ 返回值：子字符串。
+
+
+
 ## atoi() 和 stoi()
 
 相同点：
