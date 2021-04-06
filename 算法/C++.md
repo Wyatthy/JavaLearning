@@ -351,7 +351,40 @@ int main(){
 
 
 
-# 体排序
+# 结构体
+
+## 构造函数
+
+在建立结构体数组时,如果只写了带参数的构造函数将会出现数组无法初始化的错误！！！各位同学要牢记呀！
+下面是一个比较安全的带构造的结构体示例
+
+```cpp
+struct node{
+    int data;
+    string str;
+    char x;
+    //注意构造函数最后这里没有分号哦！
+  node() :x(), str(), data(){} //无参数的构造函数数组初始化时调用
+  node(int a, string b, char c) :data(a), str(b), x(c){}//有参构造
+}N[10];
+
+int main()
+{
+	  N[0] = { 1,"hello",'c' };  
+	  N[1] = { 2,"c++",'d' };    //无参默认结构体构造体函数
+	  N[2].init(3, "java", 'e'); //自定义初始化函数的调用
+	  N[3] = node(4, "python", 'f'); //有参数结构体构造函数
+	  N[4] = { 5,"python3",'p' };
+	for (int i = 0; i < 5; i++){
+		cout << N[i].data << " " << N[i].str << " " << N[i].x << endl;
+	}
+	return 0;
+}
+```
+
+
+
+## 体排序
 
 ```c++
 #include<bits/stdc++.h>
@@ -847,6 +880,43 @@ int main(){
     }
 }
 ```
+
+# 树
+
+二叉树的两个常见概念
+ **full binary tree 满二叉树**：二叉树除了叶结点外所有节点都有两个子节点。
+ 对于满二叉树而言，叶子的个数等于内部结点（非叶结点）+1，写作 L = l + 1
+
+![img](https:////upload-images.jianshu.io/upload_images/42676-9b15cde1603bc120.png?imageMogr2/auto-orient/strip|imageView2/2/w/337/format/webp)
+
+full binary tree
+
+
+
+**complete binary tree 完全二叉树**：从根往下数，除了最下层外都是全满（都有两个子节点），而最下层所有叶结点都向左边靠拢填满。
+ 构造一颗完全二叉树就是**【从上到下，从左往右】**的放置节点。
+
+![img](https:////upload-images.jianshu.io/upload_images/42676-0955fabfb52c11db.png?imageMogr2/auto-orient/strip|imageView2/2/w/347/format/webp)
+
+complete binary tree
+
+
+
+如下图：
+
+- 左侧为满二叉树但不是完全二叉树，要补全的话可以给第二层最左节点下加两个子节点，或删除当前最下层的两个节点【】。
+
+- 右侧是一颗完全二叉树但并不是满二叉树，因为最下层最后一个节点没有兄弟节点，即其父节点只有一个子节点，不满，补满的话再加一个右子节点即可
+
+  【满二叉树的节点要么没孩子，要有就一定得是俩】
+
+  。
+
+  ![img](https:////upload-images.jianshu.io/upload_images/42676-025d6a7d727fd9bf.png?imageMogr2/auto-orient/strip|imageView2/2/w/645/format/webp)
+
+# 约瑟夫环
+
+https://blog.csdn.net/u011500062/article/details/72855826
 
 # 未解决的问题
 
